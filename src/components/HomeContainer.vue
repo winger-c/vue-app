@@ -2,10 +2,10 @@
   <div class="container">
     <!--   轮播图   -->
     <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in lunbotuList" :key="item.id"><img v-bind:src="item.image" alt="" width="100%"></mt-swipe-item>
-      <mt-swipe-item><img src="./../assets/images/2.jpg" alt="" width="100%"></mt-swipe-item>
-<!--      <mt-swipe-item><img src="../assets/images/3.jpg" alt="" width="100%"></mt-swipe-item>-->
-<!--      <mt-swipe-item><img src="../assets/images/4.jpg" alt="" width="100%"></mt-swipe-item>-->
+      <mt-swipe-item v-for="item in lunbotuList" :key="item.id"><img v-bind:src="item.image" alt=""></mt-swipe-item>
+<!--      <mt-swipe-item><img src="../assets/images/2.jpg" alt=""></mt-swipe-item>-->
+<!--      <mt-swipe-item><img src="../assets/images/3.jpg" alt=""></mt-swipe-item>-->
+<!--      <mt-swipe-item><img src="../assets/images/4.jpg" alt=""></mt-swipe-item>-->
     </mt-swipe>
 
     <!--   九宫格图标   -->
@@ -50,25 +50,31 @@
         lunbotuList: []
       }
     },
-    created() {
+    beforeMount() {
       this.getLunbotu();
     },
     methods: {
       getLunbotu() {
         //获取轮播图数据的方法
-        Toast('欢迎来到首页')
         // this.$ajax.get('https://www.58pic.com/index.php?m=userinfo&a=loginPopupImg').then(result =>{
         //   console.log(result)
         // }).catch(err => {
         //   console.log(err)
         // });//此处存在跨域问题
-        this.$http.get('/lunboImg').then(res =>{
-          console.log(res.data.data)
-          this.lunbotuList=res.data.data
+        this.$http.get('/lunboImg').then(res =>{//这里通过在webpack-dev-conf.js文件中进行相关配置，模仿接口格式测试数据
+          // console.log(res)
+          this.lunbotuList=res.body.data.lunboList
+          if(res.body.data.status===0){
+            Toast('欢迎来到首页')
+            for(var i = 0;i<this.lunbotuList.length;i++){
+              var j= i+1;
+              this.lunbotuList[i].image = require('../assets/images/'+j+'.jpg');//这里需要把传过来的相对路径用require得到，以便url-loader加载器对其打包
+            }
+          }else{
+            Toast('图片加载失败')
+          }
           console.log(this.lunbotuList)
-        }).catch(err => {
-          console.log(err)
-        });//此处存在跨域问题
+        })
       }
     }
   };

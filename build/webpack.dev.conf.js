@@ -10,12 +10,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 //后台数据模拟
-const express = require('express')
-const app = express()//请求server
-var appData = require('../src/assets/luntoImageData.json')
-var result = appData.lunboList
-var apiRoutes = express.Router()
-app.use('/lunboImg', apiRoutes)
+const express = require('express')//加载express模块
+const app = express()//挂载到app上
+var appData = require('../src/assets/luntoImageData.json')//加载模拟数据的文件
+var result = appData
+var apiRoutes = express.Router()//新建路由
+app.use('/lunboImg', apiRoutes)//把路由匹配上相关的路径
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
