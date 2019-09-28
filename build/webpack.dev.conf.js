@@ -9,6 +9,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+//后台数据模拟
+const express = require('express')
+const app = express()//请求server
+var appData = require('../src/assets/luntoImageData.json')
+var result = appData.lunboList
+var apiRoutes = express.Router()
+app.use('/lunboImg', apiRoutes)
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -42,6 +49,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    before (app) {
+      app.get('/lunboImg', (req, res) => {
+        res.json({
+          errno: 0,
+          data: result
+        })
+      })
     }
   },
   plugins: [

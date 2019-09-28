@@ -2,10 +2,10 @@
   <div class="container">
     <!--   轮播图   -->
     <mt-swipe :auto="4000">
-      <mt-swipe-item><img src="../assets/images/1.jpg" alt="" width="100%"></mt-swipe-item>
-      <mt-swipe-item><img src="../assets/images/2.jpg" alt="" width="100%"></mt-swipe-item>
-      <mt-swipe-item><img src="../assets/images/3.jpg" alt="" width="100%"></mt-swipe-item>
-      <mt-swipe-item><img src="../assets/images/4.jpg" alt="" width="100%"></mt-swipe-item>
+      <mt-swipe-item v-for="item in lunbotuList" :key="item.id"><img v-bind:src="item.image" alt="" width="100%"></mt-swipe-item>
+      <mt-swipe-item><img src="./../assets/images/2.jpg" alt="" width="100%"></mt-swipe-item>
+<!--      <mt-swipe-item><img src="../assets/images/3.jpg" alt="" width="100%"></mt-swipe-item>-->
+<!--      <mt-swipe-item><img src="../assets/images/4.jpg" alt="" width="100%"></mt-swipe-item>-->
     </mt-swipe>
 
     <!--   九宫格图标   -->
@@ -41,6 +41,7 @@
 
 <script>
   import {Toast} from 'mint-ui'
+  import axios from 'axios'
 
   export default {
     name: "HomeContainer",
@@ -56,9 +57,18 @@
       getLunbotu() {
         //获取轮播图数据的方法
         Toast('欢迎来到首页')
-        // this.$http.get("https://www.58pic.com/index.php?m=userinfo&a=loginPopupImg").then(result =>{
+        // this.$ajax.get('https://www.58pic.com/index.php?m=userinfo&a=loginPopupImg').then(result =>{
         //   console.log(result)
+        // }).catch(err => {
+        //   console.log(err)
         // });//此处存在跨域问题
+        this.$http.get('/lunboImg').then(res =>{
+          console.log(res.data.data)
+          this.lunbotuList=res.data.data
+          console.log(this.lunbotuList)
+        }).catch(err => {
+          console.log(err)
+        });//此处存在跨域问题
       }
     }
   };
@@ -67,6 +77,11 @@
 <style scoped lang="scss">
   .mint-swipe {
     height: 200px;
+    .mint-swipe-item{
+      img{
+        width:100%;
+      }
+    }
   }
 
   .container {

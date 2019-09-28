@@ -9,13 +9,17 @@ import './clib/mui-master/dist/css/icons-extra.css'//导入字体扩展文件
 import VueRouter from 'vue-router'
 import router from './router'
 import VueResource from 'vue-resource'
+import axios from 'axios';
+
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
-Vue.component(Header.name, Header)
 
+Vue.component(Header.name, Header)
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
+
+Vue.prototype.$ajax = axios; //修改原型链
 
 
 
