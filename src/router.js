@@ -7,6 +7,7 @@ import SearchContainer from './components/SearchContainer.vue'
 
 var router = new VueRouter({
   routes: [
+    {path: '/', redirect: '/home' },
     {path: '/home', component: HomeContainer},
     {path: '/vip_user', component: VipUserContainer},
     {path: '/shopping', component: CartContainer},
