@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
 <!--  顶部 Header区域  -->
-    <mt-header fixed title="吾购"></mt-header>
+    <mt-header fixed title="吾购">
+      <router-link to="/" slot="left">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+    </mt-header>
 <!-- 中间的 router-view 区域 -->
     <transition>
       <router-view></router-view>
@@ -35,7 +39,14 @@
 <style lang="scss">
 .app-container{
   padding-top: 40px;
+  padding-bottom: 50px;
   overflow:hidden;
+  .mint-header.is-fixed {
+    z-index: 1000;
+  }
+  .mui-bar-tab{
+    z-index: 1000;
+  }
 }
   .v-enter{
     opacity:0;
